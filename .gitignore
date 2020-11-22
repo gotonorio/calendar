@@ -1,0 +1,10 @@
+*.log
+*.pot
+*.pyc
+*.ico
+*.sqlite3
+.DS_Store
+.vscode/
+__pycache__/
+static/*.png
+local_settings.py

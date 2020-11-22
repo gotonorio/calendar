@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
+<nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">{{ month_current | date:"Y年m月" }}</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'mcal:month' month_previous.year month_previous.month %}">前月</a>
+      <a class="navbar-item" href="{% url 'mcal:month' month_next.year month_next.month %}">次月</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+{% block content %}
+<br>
+<br>
+<div class="container is-fluid">
+  <table class="table is-narrow is-striped is-responsible">
+    <thead>
+      <tr>
+        {% for w in week_names %}
+          <th class="is-danger has-text-centered">{{ w }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {% for week in month_days %}
+        <tr>
+         {% for day in week %}
+           {% if now == day %}
+             <td class="is-primary has-text-centered">
+           {% else %}
+             <td class="has-text-centered">
+           {% endif %}
+
+         {% if month_current.month != day.month %}
+             {{ day | date:"m/d" }}
+         {% else %}
+             {{ day.day }}
+         {% endif %}
+
+         </td>
+         {% endfor %}
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
