@@ -1,54 +1,72 @@
-{% extends 'app/base.html' %}
+{% extends 'base.html' %}
+
+{% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
+<nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">{{ month_current | date:"Y年m月" }}</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'mcal:month_with_schedule' month_previous.year month_previous.month %}">前月</a>
+      <a class="navbar-item" href="{% url 'mcal:month_with_schedule' month_next.year month_next.month %}">次月</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+
 {% block content %}
-    <style>
-        table {
-            table-layout: fixed;
-        }
+<style>
+  table{
+    table-layout: fixed;
+  }
+  td > div {
+    height: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+</style>
 
-        td > div {
-            height: 100px;
-            overflow: hidden;
-            white-space: nowrap;
-        }
+<br>
+<div class="container is-fluid">
+  <table class="table is-narrow is-striped is-responsible">
+    <thead>
+    <tr>
+      {% for w in week_names %}
+        <th class="is-danger has-text-centered">{{ w }}</th>
+      {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for week_day_schedles in month_day_schedules %}
+      <tr>
+        {% for day, schedules in week_day_schedles.items %}
+          {% if now == day %}
+            <td class="table-success">
+              {% else %}
+            <td>
+          {% endif %}
+        <div>
+          {% if month_current.month != day.month %}
+            {{ day | date:"m/d" }}
+          {% else %}
+            {{ day.day }}
+          {% endif %}
 
-    </style>
-    <a href="{% url 'app:month_with_schedule' month_previous.year month_previous.month %}">前月</a>
-    {{ month_current | date:"Y年m月" }}
-    <a href="{% url 'app:month_with_schedule' month_next.year month_next.month %}">次月</a>
-
-    <table class="table">
-        <thead>
-        <tr>
-            {% for w in week_names %}
-                <th>{{ w }}</th>
-            {% endfor %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for week_day_schedles in month_day_schedules %}
-            <tr>
-                {% for day, schedules in week_day_schedles.items %}
-                    {% if now == day %}
-                        <td class="table-success">
-                            {% else %}
-                        <td>
-                    {% endif %}
-
-                <div>
-                    {% if month_current.month != day.month %}
-                        {{ day | date:"m/d" }}
-                    {% else %}
-                        {{ day.day }}
-                    {% endif %}
-
-                    {% for schedule in schedules %}
-                        <p>{{ schedule.summary }}</p>
-                    {% endfor %}
-                </div>
-                </td>
-                {% endfor %}
-            </tr>
+          {% for schedule in schedules %}
+            <p>{{ schedule.summary }}</p>
+          {% endfor %}
+        </div>
+        </td>
         {% endfor %}
-        </tbody>
+      </tr>
+    {% endfor %}
+    </tbody>
     </table>
 {% endblock %}

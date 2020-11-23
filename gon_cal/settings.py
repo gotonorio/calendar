@@ -125,6 +125,10 @@ STATIC_URL = '/static/'
 # 追加設定
 AUTH_USER_MODEL = 'register.User'
 
+LOGIN_URL = 'register:login'
+LOGIN_REDIRECT_URL = 'mcal:month_with_schedule'
+LOGOUT_REDIRECT_URL = 'mcal:month_with_schedule'
+
 # For debugging
 if DEBUG:
     # 開発環境における静的ファイルの場所を指定する。
