@@ -17,6 +17,9 @@
       <a class="navbar-item" href="{% url 'mcal:month_with_schedule' month_previous.year month_previous.month %}">前月</a>
       <a class="navbar-item" href="{% url 'mcal:month_with_schedule' month_next.year month_next.month %}">次月</a>
     </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="{% url 'mcal:month_with_forms'%}">管理者</a>
+    </div>
   </div>
 </nav>
 {% endblock navbar %}
@@ -48,15 +51,15 @@
       <tr>
         {% for day, schedules in week_day_schedles.items %}
           {% if now == day %}
-            <td class="table-success">
+            <td class="is-primary has-text-right">
               {% else %}
-            <td>
+            <td class="has-text-right">
           {% endif %}
         <div>
           {% if month_current.month != day.month %}
             {{ day | date:"m/d" }}
           {% else %}
-            {{ day.day }}
+            {{ day.day }}日
           {% endif %}
 
           {% for schedule in schedules %}

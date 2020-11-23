@@ -2,6 +2,7 @@ import calendar
 import datetime
 import itertools
 from collections import deque
+from django import forms
 
 
 class BaseCalendarMixin:
