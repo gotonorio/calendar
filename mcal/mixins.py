@@ -1,11 +1,12 @@
 import calendar
 import datetime
+import itertools
 from collections import deque
 
 
 class BaseCalendarMixin:
     """カレンダー関連Mixinの、基底クラス"""
-    first_weekday = 0  # 0は月曜から、1は火曜から。6なら日曜日からになります。お望みなら、継承したビューで指定してください。
+    first_weekday = 0  # 0は月曜から、1は火曜から。6なら日曜日から。
     week_names = ['月', '火', '水', '木', '金', '土', '日']  # これは、月曜日から書くことを想定します。['Mon', 'Tue'...
 
     def setup_calendar(self):
@@ -13,7 +14,7 @@ class BaseCalendarMixin:
 
         calendar.Calendarクラスの機能を利用するため、インスタンス化します。
         Calendarクラスのmonthdatescalendarメソッドを利用していますが、デフォルトが月曜日からで、
-        火曜日から表示したい(first_weekday=1)、といったケースに対応するためのセットアップ処理です。
+        日曜日から表示したい(first_weekday=6)、といったケースに対応するためのセットアップ処理です。
 
         """
         self._calendar = calendar.Calendar(self.first_weekday)
@@ -69,3 +70,39 @@ class MonthCalendarMixin(BaseCalendarMixin):
             'week_names': self.get_week_names(),
         }
         return calendar_data
+
+
+class MonthWithScheduleMixin(MonthCalendarMixin):
+    """スケジュール付きの、月間カレンダーを提供するMixin"""
+
+    def get_month_schedules(self, start, end, days):
+        """それぞれの日とスケジュールを返す"""
+        lookup = {
+            # '例えば、date__range: (1日, 31日)'を動的に作る
+            '{}__range'.format(self.date_field): (start, end)
+        }
+        # 例えば、Schedule.objects.filter(date__range=(1日, 31日)) になる
+        queryset = self.model.objects.filter(**lookup)
+
+        # {1日のdatetime: 1日のスケジュール全て, 2日のdatetime: 2日の全て...}のような辞書を作る
+        day_schedules = {day: [] for week in days for day in week}
+        for schedule in queryset:
+            schedule_date = getattr(schedule, self.date_field)
+            day_schedules[schedule_date].append(schedule)
+
+        # day_schedules辞書を、周毎に分割する。[{1日: 1日のスケジュール...}, {8日: 8日のスケジュール...}, ...]
+        # 7個ずつ取り出して分割しています。
+        size = len(day_schedules)
+        return [{key: day_schedules[key] for key in itertools.islice(day_schedules, i, i+7)} for i in range(0, size, 7)]
+
+    def get_month_calendar(self):
+        calendar_context = super().get_month_calendar()
+        month_days = calendar_context['month_days']
+        month_first = month_days[0][0]
+        month_last = month_days[-1][-1]
+        calendar_context['month_day_schedules'] = self.get_month_schedules(
+            month_first,
+            month_last,
+            month_days
+        )
+        return calendar_context

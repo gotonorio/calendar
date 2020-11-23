@@ -35,21 +35,21 @@
     <tbody>
       {% for week in month_days %}
         <tr>
-         {% for day in week %}
-           {% if now == day %}
-             <td class="is-primary has-text-centered">
-           {% else %}
-             <td class="has-text-centered">
-           {% endif %}
+          {% for day in week %}
+            {% if now == day %}
+              <td class="is-info has-text-centered">
+            {% else %}
+              <td class="has-text-centered">
+            {% endif %}
 
-         {% if month_current.month != day.month %}
-             {{ day | date:"m/d" }}
-         {% else %}
-             {{ day.day }}
-         {% endif %}
+            {% if month_current.month != day.month %}
+              {{ day | date:"m/d" }}
+            {% else %}
+              {{ day.day }}
+            {% endif %}
 
-         </td>
-         {% endfor %}
+            </td>
+          {% endfor %}
         </tr>
       {% endfor %}
     </tbody>
