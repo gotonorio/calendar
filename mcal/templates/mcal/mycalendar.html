@@ -29,6 +29,7 @@
 <div class="ss_container is-fluid">
   {% include 'mcal/includes/month.html' %}
   <hr>
+  {{date}}
   <form action="" method="POST">
     {{ form.non_field_errors }}
     {% for field in form %}

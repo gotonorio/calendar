@@ -4,14 +4,14 @@ import logging
 #from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
-
+from django.utils import timezone
 from . import mixins
 from .forms import ScheduleForm
 from .models import Schedule
 
 
 class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
-    """スケジュール付きの月間カレンダーを表示するビュー"""
+    """ 月間カレンダーを表示する """
     template_name = 'mcal/month_with_schedule.html'
     model = Schedule
     date_field = 'date'
@@ -25,7 +25,7 @@ class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateV
 
 
 class MyCalendar(mixins.MonthCalendarMixin, generic.FormView):
-    """月間カレンダー、週間カレンダー、スケジュール登録画面のある欲張りビュー"""
+    """ スケジュール登録画面 """
     template_name = 'mcal/mycalendar.html'
     model = Schedule
     date_field = 'date'
@@ -56,6 +56,8 @@ class MyCalendar(mixins.MonthCalendarMixin, generic.FormView):
         month_calendar_context = self.get_month_calendar()
         context.update(month_calendar_context)
         context['form'] = scheduleForm
+        context['date'] = date
+        logging.debug(date)
         return context
 
     def form_valid(self, form):
@@ -71,7 +73,8 @@ class MyCalendar(mixins.MonthCalendarMixin, generic.FormView):
             date=date,
             defaults={
                 'description': schedule.description,
-                'date': date
+                'date': date,
+                #'created_at': timezone.now
             }
         )
         return super().form_valid(schedule)
