@@ -18,7 +18,7 @@
       <a class="navbar-item" href="{% url 'mcal:month_with_schedule' month_next.year month_next.month %}">次月</a>
     </div>
     <div class="navbar-end">
-      <a class="navbar-item" href="{% url 'mcal:month_with_forms'%}">管理者</a>
+      <a class="navbar-item" href="{% url 'mcal:mycalendar'%}">管理者</a>
     </div>
   </div>
 </nav>
@@ -40,36 +40,33 @@
 <div class="container is-fluid">
   <table class="table is-narrow is-striped is-responsible">
     <thead>
-    <tr>
-      {% for w in week_names %}
-        <th class="is-danger has-text-centered">{{ w }}</th>
-      {% endfor %}
-    </tr>
-    </thead>
-    <tbody>
-    {% for week_day_schedles in month_day_schedules %}
       <tr>
-        {% for day, schedules in week_day_schedles.items %}
-          {% if now == day %}
-            <td class="is-primary has-text-right">
-              {% else %}
-            <td class="has-text-right">
-          {% endif %}
-        <div>
-          {% if month_current.month != day.month %}
-            {{ day | date:"m/d" }}
-          {% else %}
-            {{ day.day }}日
-          {% endif %}
-
-          {% for schedule in schedules %}
-            <p>{{ schedule.summary }}</p>
-          {% endfor %}
-        </div>
-        </td>
+        {% for w in week_names %}
+          <th class="is-danger has-text-centered">{{ w }}</th>
         {% endfor %}
       </tr>
-    {% endfor %}
+    </thead>
+    <tbody>
+      {% for week_day_schedles in month_day_schedules %}
+        <tr>
+          {% for day, schedules in week_day_schedles.items %}
+            <td class="has-text-right">
+              <div>
+                {% if month_current.month != day.month %}
+                  {{ day | date:"m/d" }}
+                {% else %}
+                  {{ day.day }}日
+                {% endif %}
+                
+                {% for schedule in schedules %}
+                  <div class="has-text-centered">{{schedule.description | linebreaks}}</div>
+                {% endfor %}
+              </div>
+            </td>
+          {% endfor %}
+        </tr>
+      {% endfor %}
     </tbody>
-    </table>
+  </table>
+</div>
 {% endblock %}

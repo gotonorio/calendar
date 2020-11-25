@@ -3,14 +3,13 @@ from .models import Schedule
 
 
 class ScheduleForm(forms.ModelForm):
-    """シンプルなスケジュール登録用フォーム"""
+    """ bulmaに対応するためのModelForm """
 
     class Meta:
         model = Schedule
-        fields = ('summary', 'date',)
+        fields = ('description', )
         widgets = {
-            'summary': forms.TextInput(attrs={
-                'class': 'form-control',
+            'description': forms.Textarea(attrs={
+                'class': 'textarea',
             }),
-            'date': forms.HiddenInput,
         }

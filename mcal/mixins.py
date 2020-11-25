@@ -1,7 +1,9 @@
 import calendar
 import datetime
 import itertools
+import logging
 from collections import deque
+
 from django import forms
 
 
@@ -118,6 +120,7 @@ class MonthWithFormsMixin(MonthCalendarMixin):
             # '例えば、date__range: (1日, 31日)'を動的に作る
             '{}__range'.format(self.date_field): (start, end)
         }
+        # logging.debug(lookup)
         # 例えば、Schedule.objects.filter(date__range=(1日, 31日)) になる
         queryset = self.model.objects.filter(**lookup)
         days_count = sum(len(week) for week in days)

@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
+<nav class="navbar is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">{{ month_current | date:"Y年m月" }}</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <a class="navbar-item" href="{% url 'mcal:month_with_schedule' month_previous.year month_previous.month %}">前月</a>
+      <a class="navbar-item" href="{% url 'mcal:month_with_schedule' month_next.year month_next.month %}">次月</a>
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="{% url 'mcal:month_with_schedule'%}">戻る</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+<br>
+<div class="ss_container is-fluid">
+  {% include 'mcal/includes/month.html' %}
+  <hr>
+  <form action="" method="POST">
+    {{ form.non_field_errors }}
+    {% for field in form %}
+        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
+        <div>
+          {{ field }}
+          {{ field.errors }}
+        </div>
+    {% endfor %}
+    {% csrf_token %}
+    <button type="submit" class="button is-primary">送信</button>
+  </form>
+</div>
+{% endblock %}
+
