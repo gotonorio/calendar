@@ -4,7 +4,6 @@ import logging
 #from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
-from django.utils import timezone
 from . import mixins
 from .forms import ScheduleForm
 from .models import Schedule
@@ -74,7 +73,6 @@ class CalendarCreateView(mixins.MonthCalendarMixin, generic.FormView):
             defaults={
                 'description': schedule.description,
                 'date': date,
-                #'created_at': timezone.now
             }
         )
         return super().form_valid(schedule)
