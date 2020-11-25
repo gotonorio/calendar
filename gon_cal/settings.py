@@ -126,8 +126,8 @@ STATIC_URL = '/static/'
 AUTH_USER_MODEL = 'register.User'
 
 LOGIN_URL = 'register:login'
-LOGIN_REDIRECT_URL = 'mcal:month_with_schedule'
-LOGOUT_REDIRECT_URL = 'mcal:month_with_schedule'
+LOGIN_REDIRECT_URL = 'mcal:calendar'
+LOGOUT_REDIRECT_URL = 'mcal:calendar'
 
 # For debugging
 if DEBUG:

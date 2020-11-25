@@ -14,11 +14,11 @@
   </div>
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="{% url 'mcal:month_with_schedule' month_previous.year month_previous.month %}">前月</a>
-      <a class="navbar-item" href="{% url 'mcal:month_with_schedule' month_next.year month_next.month %}">次月</a>
+      <a class="navbar-item" href="{% url 'mcal:calendar' month_previous.year month_previous.month %}">前月</a>
+      <a class="navbar-item" href="{% url 'mcal:calendar' month_next.year month_next.month %}">次月</a>
     </div>
     <div class="navbar-end">
-      <a class="navbar-item" href="{% url 'mcal:mycalendar'%}">管理者</a>
+      <a class="navbar-item" href="{% url 'mcal:create'%}">管理者</a>
     </div>
   </div>
 </nav>

@@ -12,7 +12,7 @@ from .models import Schedule
 
 class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
     """ 月間カレンダーを表示する """
-    template_name = 'mcal/month_with_schedule.html'
+    template_name = 'mcal/calendar.html'
     model = Schedule
     date_field = 'date'
     first_weekday = 6
@@ -24,13 +24,13 @@ class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateV
         return context
 
 
-class MyCalendar(mixins.MonthCalendarMixin, generic.FormView):
+class CalendarCreateView(mixins.MonthCalendarMixin, generic.FormView):
     """ スケジュール登録画面 """
-    template_name = 'mcal/mycalendar.html'
+    template_name = 'mcal/calendar_form.html'
     model = Schedule
     date_field = 'date'
     form_class = ScheduleForm
-    success_url = reverse_lazy('mcal:month_with_schedule')
+    success_url = reverse_lazy('mcal:calendar')
 
     def get_datetime(self, year, month, day):
         if year and month and day:

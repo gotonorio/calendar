@@ -13,7 +13,7 @@
     <tr>
       {% for day in week %}
         <td>
-          <a href="{% url 'mcal:mycalendar' day.year day.month day.day %}">{{ day.day }}</a>
+          <a href="{% url 'mcal:create' day.year day.month day.day %}">{{ day.day }}</a>
         </td>
       {% endfor %}
     </tr>
