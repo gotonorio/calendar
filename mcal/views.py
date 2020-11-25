@@ -1,7 +1,6 @@
 import datetime
-import logging
+# import logging
 
-#from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.views import generic
 from . import mixins
@@ -30,6 +29,7 @@ class CalendarCreateView(mixins.MonthCalendarMixin, generic.FormView):
     date_field = 'date'
     form_class = ScheduleForm
     success_url = reverse_lazy('mcal:calendar')
+    first_weekday = 6
 
     def get_datetime(self, year, month, day):
         if year and month and day:
@@ -40,6 +40,8 @@ class CalendarCreateView(mixins.MonthCalendarMixin, generic.FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        calendar_context = self.get_month_calendar()
+        context.update(calendar_context)
         month = self.kwargs.get('month')
         year = self.kwargs.get('year')
         day = self.kwargs.get('day')
@@ -56,7 +58,6 @@ class CalendarCreateView(mixins.MonthCalendarMixin, generic.FormView):
         context.update(month_calendar_context)
         context['form'] = scheduleForm
         context['date'] = date
-        logging.debug(date)
         return context
 
     def form_valid(self, form):
@@ -66,8 +67,6 @@ class CalendarCreateView(mixins.MonthCalendarMixin, generic.FormView):
         date = self.get_datetime(year, month, day)
         schedule = form.save(commit=False)
         schedule.date = date
-        logging.debug(schedule.date)
-        logging.debug(schedule.description)
         Schedule.objects.update_or_create(
             date=date,
             defaults={
