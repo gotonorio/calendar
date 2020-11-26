@@ -39,7 +39,7 @@
 
 <br>
 <div class="container is-fluid">
-  <table class="table is-narrow is-striped is-responsible">
+  <table class="table is-narrow is-responsible is-bordered">
     <thead>
       <tr>
         {% for w in week_names %}
@@ -56,7 +56,7 @@
                 {% if month_current.month != day.month %}
                   {{ day | date:"m/d" }}
                 {% else %}
-                  {{ day.day }}日
+                  <div class=" has-text-weight-bold">{{ day.day }}日</div>
                 {% endif %}
                 
                 {% for schedule in schedules %}

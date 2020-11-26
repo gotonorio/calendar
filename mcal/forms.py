@@ -10,6 +10,7 @@ class ScheduleForm(forms.ModelForm):
         fields = ('description', )
         widgets = {
             'description': forms.Textarea(attrs={
-                'class': 'textarea',
+                'class': 'textarea ',
+                'rows': '5',
             }),
         }
