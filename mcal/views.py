@@ -1,11 +1,17 @@
 import datetime
-# import logging
 
+from django.contrib.auth.mixins import (LoginRequiredMixin,
+                                        PermissionRequiredMixin)
 from django.urls import reverse_lazy
 from django.views import generic
+
 from . import mixins
 from .forms import ScheduleForm
 from .models import Schedule
+
+# import logging
+
+
 
 
 class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
@@ -22,7 +28,7 @@ class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateV
         return context
 
 
-class CalendarCreateView(mixins.MonthCalendarMixin, generic.FormView):
+class CalendarCreateView(mixins.MonthCalendarMixin, PermissionRequiredMixin, generic.FormView):
     """ スケジュール登録画面 """
     template_name = 'mcal/calendar_form.html'
     model = Schedule
@@ -30,6 +36,8 @@ class CalendarCreateView(mixins.MonthCalendarMixin, generic.FormView):
     form_class = ScheduleForm
     success_url = reverse_lazy('mcal:calendar')
     first_weekday = 6
+    # 必要な権限
+    permission_required = ("mcal.add_schedule")
 
     def get_datetime(self, year, month, day):
         if year and month and day:

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="ss_container is-fluid ">
+  <br>
+  <div class="content has-text-centered">
+    <form method='post' action="">
+      {% csrf_token %}
+      <table class="table" >
+        {{form}}
+      </table>
+      <hr>
+      <button type="submit" name='next' value='{{next}}' class="button is-primary">login</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
