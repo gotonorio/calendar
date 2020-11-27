@@ -42,36 +42,36 @@
 <div class="container is-fluid">
   <div class="content has-text-centered">
     <h4>{{ month_current | date:"Y年m月" }}カレンダー</h4>
-  </div>
-  <table class="table is-narrow is-responsible is-bordered">
-    <thead>
-      <tr>
-        {% for w in week_names %}
-          <th class="is-danger has-text-centered">{{ w }}</th>
-        {% endfor %}
-      </tr>
-    </thead>
-    <tbody>
-      {% for week_day_schedles in month_day_schedules %}
+    <table class="table is-narrow is-responsible is-bordered">
+      <thead>
         <tr>
-          {% for day, schedules in week_day_schedles.items %}
-            <td class="has-text-right">
-              <div>
-                {% if month_current.month != day.month %}
-                  {{ day | date:"m/d" }}
-                {% else %}
-                  <div class=" has-text-weight-bold">{{ day.day }}日</div>
-                {% endif %}
-                
-                {% for schedule in schedules %}
-                  <div class="has-text-centered">{{schedule.description | linebreaks}}</div>
-                {% endfor %}
-              </div>
-            </td>
+          {% for w in week_names %}
+            <th class="is-danger has-text-centered">{{ w }}</th>
           {% endfor %}
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for week_day_schedles in month_day_schedules %}
+          <tr>
+            {% for day, schedules in week_day_schedles.items %}
+              <td class="has-text-right">
+                <div>
+                  {% if month_current.month != day.month %}
+                    {{ day | date:"m/d" }}
+                  {% else %}
+                    <div class=" has-text-weight-bold">{{ day.day }}日</div>
+                  {% endif %}
+
+                  {% for schedule in schedules %}
+                    <div class="has-text-centered">{{schedule.description | linebreaks}}</div>
+                  {% endfor %}
+                </div>
+              </td>
+            {% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}
