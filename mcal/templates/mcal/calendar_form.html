@@ -28,6 +28,9 @@
 {% block content %}
 <br>
 <div class="ss_container is-fluid">
+  <div class="content has-text-centered">
+    <h4>{{ month_current | date:"Y年m月" }}</h4>
+  </div>
   {% include 'mcal/includes/month.html' %}
   <hr>
   {{date}}

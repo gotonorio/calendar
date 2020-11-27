@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '&3wbz#$9*s*+ke@tq6vro1&%m(7tap&!g#=vmbasw-ll_3iyoj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -128,6 +128,12 @@ AUTH_USER_MODEL = 'register.User'
 LOGIN_URL = 'register:login'
 LOGIN_REDIRECT_URL = 'mcal:calendar'
 LOGOUT_REDIRECT_URL = 'mcal:calendar'
+
+# settings.pyの切り替え
+try:
+    from .local_settings import *
+except ImportError:
+    pass
 
 # For debugging
 if DEBUG:
