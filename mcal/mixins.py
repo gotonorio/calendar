@@ -97,6 +97,7 @@ class MonthWithScheduleMixin(MonthCalendarMixin):
             '{}__range'.format(self.date_field): (start, end)
         }
         # 例えば、Schedule.objects.filter(date__range=(1日, 31日)) になる
+        # https://djangobrothers.com/blogs/filter_queryset_by_dict/
         queryset = self.model.objects.filter(**lookup)
 
         # {1日のdatetime: 1日のスケジュール全て, 2日のdatetime: 2日の全て...}のような辞書を作る
