@@ -7,10 +7,13 @@ class ScheduleForm(forms.ModelForm):
 
     class Meta:
         model = Schedule
-        fields = ('description', 'align', 'memo')
+        fields = ('align', 'description', 'memo')
         widgets = {
             'description': forms.Textarea(attrs={
-                'class': 'textarea ',
-                'rows': '5',
+                'class': 'textarea',
+                'rows': '3',
             }),
+            'align': forms.Select(attrs={
+                'class': 'select',
+            })
         }

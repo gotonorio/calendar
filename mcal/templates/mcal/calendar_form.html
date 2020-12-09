@@ -32,21 +32,19 @@
     <h4>{{ month_current | date:"Y年m月" }}</h4>
   </div>
   {% include 'mcal/includes/month.html' %}
-  <hr>
-  {{date}}
-  <form action="" method="POST">
-    {{ form.non_field_errors }}
-    {% for field in form %}
-        <label for="{{ field.id_for_label }}">{{ field.label_tag }}</label>
-        <div>
-          {{ field }}
-          {{ field.errors }}
-        </div>
-    {% endfor %}
-    {% csrf_token %}
-    <button type="submit" class="button is-primary">送信</button>
-    <a class="button is-danger" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
-  </form>
+  <div class="content has-text-centered">
+    {{date}}
+    <hr>
+    <form action="" method="POST">
+      {{ form.non_field_errors }}
+      <table class="table  is-narrow">
+        {{form}}
+      </table>
+      {% csrf_token %}
+      <button type="submit" class="button is-primary">送信</button>
+      <a class="button is-danger" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
+    </form>
+  </div>
 </div>
 {% endblock %}
 
