@@ -45,6 +45,7 @@
     {% endfor %}
     {% csrf_token %}
     <button type="submit" class="button is-primary">送信</button>
+    <a class="button is-danger" href="javascript:void(0);" onclick="window.history.back();">戻る</a>
   </form>
 </div>
 {% endblock %}

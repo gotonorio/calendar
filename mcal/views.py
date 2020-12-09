@@ -9,9 +9,7 @@ from . import mixins
 from .forms import ScheduleForm
 from .models import Schedule
 
-# import logging
-
-
+import logging
 
 
 class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
@@ -55,12 +53,22 @@ class CalendarCreateView(mixins.MonthCalendarMixin, PermissionRequiredMixin, gen
         day = self.kwargs.get('day')
         date = self.get_datetime(year, month, day)
         try:
+            text_align = Schedule.objects.values('align').get(date=date)['align']
+        except Schedule.DoesNotExist:
+            text_align = 'left'
+        try:
             data = Schedule.objects.values('description').get(date=date)['description']
         except Schedule.DoesNotExist:
             data = ''
+        try:
+            memo = Schedule.objects.values('memo').get(date=date)['memo']
+        except Schedule.DoesNotExist:
+            memo = ''
 
         scheduleForm = ScheduleForm(initial={
-            'description': data
+            'align': text_align,
+            'description': data,
+            'memo': memo,
         })
         month_calendar_context = self.get_month_calendar()
         context.update(month_calendar_context)
@@ -78,8 +86,11 @@ class CalendarCreateView(mixins.MonthCalendarMixin, PermissionRequiredMixin, gen
         Schedule.objects.update_or_create(
             date=date,
             defaults={
+                'align': schedule.align,
                 'description': schedule.description,
+                'memo': schedule.memo,
                 'date': date,
             }
         )
         return super().form_valid(schedule)
+

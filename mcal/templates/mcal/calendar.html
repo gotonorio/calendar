@@ -63,8 +63,15 @@
                   {% endif %}
 
                   {% for schedule in schedules %}
-                    <div class="has-text-centered">{{schedule.description | linebreaks}}</div>
+                    {% if schedule.align == 'left'%}
+                      <div class="has-text-left">{{schedule.description | linebreaks}}</div>
+                    {% elif schedule.align == 'center'%}
+                      <div class="has-text-centered">{{schedule.description | linebreaks}}</div>
+                    {% else %}
+                      <div class="has-text-right">{{schedule.description | linebreaks}}</div>
+                    {% endif %}
                   {% endfor %}
+
                 </div>
               </td>
             {% endfor %}
