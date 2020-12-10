@@ -51,15 +51,19 @@
         </tr>
       </thead>
       <tbody>
-        {% for week_day_schedles in month_day_schedules %}
+        {% for week_day_schedules in month_day_schedules %}
           <tr>
-            {% for day, schedules in week_day_schedles.items %}
-              <td class="has-text-right">
+            {% for day, schedules in week_day_schedules.items %}
+              {% if day == now %}
+                <td class="is-light has-text-right">
+              {% else %}
+                <td class="has-text-right">
+              {% endif %}
                 <div>
                   {% if month_current.month != day.month %}
                     {{ day | date:"m/d" }}
                   {% else %}
-                    <div class=" has-text-weight-bold">{{ day.day }}日</div>
+                    <div class="has-text-weight-bold">{{ day.day }}日</div>
                   {% endif %}
 
                   {% for schedule in schedules %}

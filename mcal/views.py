@@ -93,4 +93,3 @@ class CalendarCreateView(mixins.MonthCalendarMixin, PermissionRequiredMixin, gen
             }
         )
         return super().form_valid(schedule)
-
