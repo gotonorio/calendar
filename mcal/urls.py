@@ -11,4 +11,5 @@ urlpatterns = [
     path('create/', views.CalendarCreateView.as_view(), name='create'),
     path('create/<int:year>/<int:month>/', views.CalendarCreateView.as_view(), name='create'),
     path('create/<int:year>/<int:month>/<int:day>/', views.CalendarCreateView.as_view(), name='create'),
+    path('memo/<int:year>/<int:month>/<int:day>/', views.CalendarMemo.as_view(), name='memo'),
 ]

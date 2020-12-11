@@ -56,26 +56,31 @@
             {% for day, schedules in week_day_schedules.items %}
               <td class="has-text-right">
               <div>
+
                 {% if month_current.month != day.month %}
                   {{ day | date:"m/d" }}
                 {% else %}
                   {% if day == now %}
-                    <div class="has-background-info has-text-white has-text-weight-bold">
+                    <div class="has-background-warning has-text-weight-bold">
                   {% else %}
                     <div class="has-text-weight-bold">
                   {% endif %}
-                  {{day.day}}日
+                  <a href="{% url 'mcal:memo' day.year day.month day.day %}">{{day.day}}日 </a>
                   </div>
                 {% endif %}
+
                 {% for schedule in schedules %}
                   {% if schedule.align == 'left'%}
-                    <div class="has-text-left">{{schedule.description | linebreaks}}</div>
+                    <div class="has-text-left">
                   {% elif schedule.align == 'center'%}
-                    <div class="has-text-centered">{{schedule.description | linebreaks}}</div>
+                    <div class="has-text-centered">
                   {% else %}
-                    <div class="has-text-right">{{schedule.description | linebreaks}}</div>
+                    <div class="has-text-right">
                   {% endif %}
+                    {{schedule.description | linebreaks}}
+                  </div>
                 {% endfor %}
+
               </div>
               </td>
             {% endfor %}

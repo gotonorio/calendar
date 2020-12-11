@@ -9,7 +9,7 @@ from . import mixins
 from .forms import ScheduleForm
 from .models import Schedule
 
-import logging
+# import logging
 
 
 class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
@@ -70,8 +70,6 @@ class CalendarCreateView(mixins.MonthCalendarMixin, PermissionRequiredMixin, gen
             'description': data,
             'memo': memo,
         })
-        month_calendar_context = self.get_month_calendar()
-        context.update(month_calendar_context)
         context['form'] = scheduleForm
         context['date'] = date
         return context
@@ -93,3 +91,22 @@ class CalendarCreateView(mixins.MonthCalendarMixin, PermissionRequiredMixin, gen
             }
         )
         return super().form_valid(schedule)
+
+
+class CalendarMemo(generic.TemplateView):
+    model = Schedule
+    template_name = 'mcal/calendar_memo.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        month = self.kwargs.get('month')
+        year = self.kwargs.get('year')
+        day = self.kwargs.get('day')
+        date = datetime.date(year=int(year), month=int(month), day=int(day))
+        try:
+            memo = Schedule.objects.values('memo').get(date=date)['memo']
+        except Schedule.DoesNotExist:
+            memo = ''
+        context['date'] = date
+        context['memo'] = memo
+        return context
