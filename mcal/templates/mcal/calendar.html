@@ -28,13 +28,16 @@
 
 {% block content %}
 <style>
-  table{
+  table {
     table-layout: fixed;
   }
   td > div {
     height: 100px;
     overflow: auto; /* scroll hidden */
     white-space: nowrap; /* normal nowrap */
+  }
+  a.today {
+    color: black;
   }
 </style>
 
@@ -55,8 +58,7 @@
           <tr>
             {% for day, schedules in week_day_schedules.items %}
               <td class="has-text-right">
-              <div>
-
+              <div> 
                 {% if month_current.month != day.month %}
                   {{ day | date:"m/d" }}
                 {% else %}
@@ -65,10 +67,9 @@
                   {% else %}
                     <div class="has-text-weight-bold">
                   {% endif %}
-                  <a href="{% url 'mcal:memo' day.year day.month day.day %}">{{day.day}}日 </a>
+                  <a href="{% url 'mcal:memo' day.year day.month day.day %}" class="today">{{day.day}}日 </a>
                   </div>
                 {% endif %}
-
                 {% for schedule in schedules %}
                   {% if schedule.align == 'left'%}
                     <div class="has-text-left">
@@ -80,7 +81,6 @@
                     {{schedule.description | linebreaks}}
                   </div>
                 {% endfor %}
-
               </div>
               </td>
             {% endfor %}
