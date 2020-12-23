@@ -1,0 +1,20 @@
+/* mcal css */
+table {
+  table-layout: fixed;
+}
+/*
+td > div {
+  height: 100px;
+  overflow: auto;
+  white-space: nowrap;
+}
+a.today {
+  color: black;
+}
+*/
+.markdown {
+  /* markdownではスクロールバーが表示されないため追加 */
+  height: 100px;
+  overflow: auto; /* scroll hidden */
+  white-space: nowrap;
+}

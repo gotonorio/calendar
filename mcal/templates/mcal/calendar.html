@@ -1,4 +1,10 @@
 {% extends 'base.html' %}
+{% load static %}
+{% load mcaltag %}
+
+{% block header %}
+  <link href="{% static 'mcal/mcal.css' %}" rel="stylesheet">
+{% endblock header %}
 
 {% block navbar %}
 {# https://bulma.io/documentation/components/navbar/ #}
@@ -27,20 +33,6 @@
 {% endblock navbar %}
 
 {% block content %}
-<style>
-  table {
-    table-layout: fixed;
-  }
-  td > div {
-    height: 100px;
-    overflow: auto; /* scroll hidden */
-    white-space: nowrap; /* normal nowrap */
-  }
-  a.today {
-    color: black;
-  }
-</style>
-
 <br>
 <div class="container is-fluid">
   <div class="content has-text-centered">
@@ -57,7 +49,7 @@
         {% for week_day_schedules in month_day_schedules %}
           <tr>
             {% for day, schedules in week_day_schedules.items %}
-              <td class="has-text-right">
+              <td class="has-text-right markdown">
               <div> 
                 {% if month_current.month != day.month %}
                   {{ day | date:"m/d" }}
@@ -78,7 +70,7 @@
                   {% else %}
                     <div class="has-text-right">
                   {% endif %}
-                    {{schedule.description | linebreaks}}
+                    {{schedule.description | markdown_to_html | linebreaks}}
                   </div>
                 {% endfor %}
               </div>

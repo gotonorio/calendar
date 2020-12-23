@@ -129,6 +129,12 @@ LOGIN_URL = 'register:login'
 LOGIN_REDIRECT_URL = 'mcal:calendar'
 LOGOUT_REDIRECT_URL = 'mcal:calendar'
 
+# マークダウンの拡張
+MARKDOWN_EXTENSIONS = [
+    'markdown.extensions.extra',
+    'markdown.extensions.codehilite',
+]
+
 # settings.pyの切り替え
 try:
     from .local_settings import *
