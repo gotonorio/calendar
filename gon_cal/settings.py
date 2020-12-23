@@ -65,6 +65,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'gon_cal.context_processors.version_no',
             ],
         },
     },
@@ -123,6 +124,8 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # 追加設定
+VERSION_NO = '2020-12-23'
+# Userモデル
 AUTH_USER_MODEL = 'register.User'
 
 LOGIN_URL = 'register:login'
