@@ -70,7 +70,7 @@
                   {% else %}
                     <div class="has-text-right">
                   {% endif %}
-                    {{schedule.description | markdown_to_html | linebreaks}}
+                    {{schedule.description | markdown_to_html}}
                   </div>
                 {% endfor %}
               </div>
