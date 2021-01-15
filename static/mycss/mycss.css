@@ -11,10 +11,9 @@ html {
   my_footerを使う場合、本体をmargin-bottomでfooterエリアを確保しなければならない。
 */
 main {
-    /*font-family: -apple-system,BlinkMacSystemFont,"Helvetica Neue",HiraginoSans-W4,"Yu Gothic Medium",Meiryo,sans-serif;*/
-    font-family: "Helvetica Neue",Arial,"Hiragino Kaku Gothic ProN","Hiragino Sans",Meiryo,sans-serif;
-    font-size: 100%;
-    font-weight: medium;
+    /* https://ics.media/entry/200317/ */
+    font-family: "Helvetica Neue",Arial,"ヒラギノ角ゴシック W3","Hiragino Sans",Meiryo,sans-serif;
+    /*font-weight: 400;*/
     margin-bottom: 40px; /* フッタの下側マージンの高さ */
 }
 /* footerだとBulmaのfooterを上書きしてしまう */
@@ -32,9 +31,8 @@ main {
   scrollクラスでtable要素を囲む。
 */
 table{
-    font-family: Osaka;
-    font-size: 95%;
-    width:100%;
+  /*font-family: Osaka;*/
+  width:100%;
 }
 .scroll{
   overflow: auto;
@@ -49,7 +47,7 @@ table{
 .scroll::-webkit-scrollbar-thumb {
    background: #BCBCBC;
 }
-/*
+/* 
 セル幅を固定して、オーバーする場合はスクロールする。divでclass設定すること。
 <td><div class="cell_scroll">テキスト</div></td>
 */
@@ -71,7 +69,7 @@ div.cell_420 {
 /* 入力フォーム用テーブルの設定 */
 .form_table {
   width: 480px;
-  margin: 0 auto;
+  margin: auto;
 }
 /* https://htmlcss.step-learn.com/contents/c031-table-width-percent.html */
 .tbl_width {
@@ -112,7 +110,7 @@ th.width80 {
 }
 
 a.vmenu {
-    text-decoration: none;
+    text-decoration: none; 
     color:#000000; /* リンク要素のデフォルトの青を黒に */
     font-size:100%;
     /*猫の足跡は背景として敷く。背景画像は繰り返さず、横0、上10px空けて配置する*/
@@ -142,7 +140,7 @@ th {
   color: #444;
   line-height: 1.0;
   padding: .6em 1.4em .5em .8em;
-  max-width: 100%;
+  max-width: 100%; 
   box-sizing: border-box;
   margin: 0;
   border: 1px solid #aaa;
@@ -169,7 +167,7 @@ th {
   border-color: #aaa;
   box-shadow: 0 0 1px 3px rgba(59, 153, 252, .7);
   box-shadow: 0 0 0 3px -moz-mac-focusring;
-  color: #222;
+  color: #222; 
   outline: none;
 }
 .select-css option {
@@ -181,7 +179,7 @@ th {
 }
 */
 /*
- https://obel.hatenablog.jp/entry/20160626/1466937585
+ https://obel.hatenablog.jp/entry/20160626/1466937585 
  md_containerクラスは画面幅が768px以上になったら、width:748px、margin:autoとなる。
 */
 @media screen and (min-width: 375px) {
