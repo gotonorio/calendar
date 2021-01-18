@@ -12,7 +12,8 @@ from .models import Schedule
 # import logging
 
 
-class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
+# class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
+class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, LoginRequiredMixin, generic.TemplateView):
     """ 月間カレンダーを表示する """
     template_name = 'mcal/calendar.html'
     model = Schedule
@@ -93,7 +94,7 @@ class CalendarCreateView(mixins.MonthCalendarMixin, PermissionRequiredMixin, gen
         return super().form_valid(schedule)
 
 
-class CalendarMemo(generic.TemplateView):
+class CalendarMemo(LoginRequiredMixin, generic.TemplateView):
     model = Schedule
     template_name = 'mcal/calendar_memo.html'
 
