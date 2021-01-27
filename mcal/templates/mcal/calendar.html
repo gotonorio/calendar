@@ -24,10 +24,11 @@
       <a class="navbar-item" href="{% url 'mcal:calendar'%}">【当月】</a>
       <a class="navbar-item" href="{% url 'mcal:calendar' month_next.year month_next.month %}">次月</a>
     </div>
-    <div class="navbar-end">
-      <a class="navbar-item" href="{% url 'mcal:create'%}">編集</a>
-      <!--<a class="navbar-item" href="{% url 'register:login'%}">編集</a>-->
-    </div>
+    {#{% if perms.mcal.add_schedule %}#}
+      <div class="navbar-end">
+        <a class="navbar-item" href="{% url 'mcal:create'%}">編集</a>
+      </div>
+    {#{% endif %}#}
   </div>
 </nav>
 {% endblock navbar %}

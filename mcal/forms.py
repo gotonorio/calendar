@@ -15,5 +15,9 @@ class ScheduleForm(forms.ModelForm):
             }),
             'align': forms.Select(attrs={
                 'class': 'select',
-            })
+            }),
+            'memo': forms.Textarea(attrs={
+                'class': 'textarea',
+                'rows': '5',
+            }),
         }
