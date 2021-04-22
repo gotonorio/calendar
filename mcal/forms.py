@@ -18,6 +18,11 @@ class ScheduleForm(forms.ModelForm):
             }),
             'memo': forms.Textarea(attrs={
                 'class': 'textarea',
-                'rows': '5',
+                'rows': '3',
             }),
         }
+
+    def __init__(self, *args, **kwargs):
+        """ classはここで設定するのが楽。checkboxはcssで変更は不可能みたい """
+        super().__init__(*args, **kwargs)
+        self.fields['align'].widget.attrs["class"] = "select-css"
