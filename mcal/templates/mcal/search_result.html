@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load static %} {# {% staticを使うため必要 #}
+
+{% block title %}
+検索結果一覧
+{% endblock title %}
+{% block head %}
+  <link href="{% static 'mcal/mcal.css' %}" rel="stylesheet">
+{% endblock head %}
+{% block navbar %}
+<nav class="navbar is-black" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="{% url 'mcal:calendar' %}">【カレンダーに戻る】</a>
+    {# ハンバーガアイコンのため #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMainMenu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarMainMenu" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+
+{% block content %}
+<br>
+<div class="container is-fluid">
+  <br>
+  <div class="content">
+  <h2>検索結果</h2>
+  </div>
+  <div class="post_list">
+    {% for post in search_result %}
+      <p>{{ post.description }}</p>
+      <p>{{ post.date | date:'Y-m-d' }}</p>
+      <br>
+    {% endfor %}
+  </div>
+</div>
+{% if object_list|length > 20 %}
+  {% include "page.html" %}
+{% endif %}
+{% endblock %}

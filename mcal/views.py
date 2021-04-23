@@ -1,7 +1,10 @@
 import datetime
 
+from django.contrib import messages
 from django.contrib.auth.mixins import (LoginRequiredMixin,
                                         PermissionRequiredMixin)
+from django.db.models import Q
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
@@ -112,3 +115,15 @@ class CalendarMemo(generic.TemplateView):
         context['date'] = date
         context['memo'] = memo
         return context
+
+
+def search(request):
+    """ 検索機能の処理 練習のため、関数viewで処理する。 """
+    qs = Schedule.objects.order_by('-date').distinct()
+    keyword = request.GET.get('keyword')
+    if keyword:
+        qs = qs.filter(
+                 Q(description__icontains=keyword) | Q(memo__icontains=keyword)
+               )
+        messages.success(request, '「{}」の検索結果'.format(keyword))
+    return render(request, 'mcal/search_result.html', {'search_result': qs})
