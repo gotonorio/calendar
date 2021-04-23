@@ -122,8 +122,6 @@ def search(request):
     qs = Schedule.objects.order_by('-date').distinct()
     keyword = request.GET.get('keyword')
     if keyword:
-        qs = qs.filter(
-                 Q(description__icontains=keyword) | Q(memo__icontains=keyword)
-               )
+        qs = qs.filter(Q(description__icontains=keyword) | Q(memo__icontains=keyword))
         messages.success(request, '「{}」の検索結果'.format(keyword))
     return render(request, 'mcal/search_result.html', {'search_result': qs})

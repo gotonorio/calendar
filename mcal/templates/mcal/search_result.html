@@ -33,10 +33,9 @@
   <br>
   <div class="content">
   <h2>検索結果</h2>
-  </div>
-  <div class="post_list">
     {% for post in search_result %}
-      <p>{{ post.description }}</p>
+      <h4><a href="{% url 'mcal:calendar' post.date|date:'Y' post.date|date:'m' %}">{{ post.description }}</a></h4>
+      <p>{{ post.memo }}</p>
       <p>{{ post.date | date:'Y-m-d' }}</p>
       <br>
     {% endfor %}

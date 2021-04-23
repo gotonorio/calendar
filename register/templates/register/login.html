@@ -19,7 +19,7 @@
 <div class="ss_container is-fluid ">
   <br>
   <div class="content has-text-centered">
-    <h4>居住者専用</h4>
+    <h4>管理者専用</h4>
     <form method='post' action="">
       {% csrf_token %}
       <table class="table" >
@@ -27,6 +27,7 @@
       </table>
       <hr>
       <button type="submit" name='next' value='{{next}}' class="button is-primary">login</button>
+      <a class="button is-danger" href="{% url 'mcal:calendar' %}">キャンセル</a>
     </form>
   </div>
 </div>
