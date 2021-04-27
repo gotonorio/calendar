@@ -65,7 +65,7 @@
                   {% else %}
                     <div class="has-text-weight-bold">
                   {% endif %}
-                  <a href="{% url 'mcal:memo' day.year day.month day.day %}" class="today">{{day.day}}日 </a>
+                    <a href="{% url 'mcal:memo' day.year day.month day.day %}" class="today">{{day.day}}日 </a>
                   </div>
                 {% endif %}
                 {% for schedule in schedules %}

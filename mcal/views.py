@@ -1,8 +1,9 @@
 import datetime
+import logging
 
+import jpholiday
 from django.contrib import messages
-from django.contrib.auth.mixins import (LoginRequiredMixin,
-                                        PermissionRequiredMixin)
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -12,10 +13,7 @@ from . import mixins
 from .forms import ScheduleForm
 from .models import Schedule
 
-# import logging
 
-
-# class MonthWithScheduleCalendar(LoginRequiredMixin, mixins.MonthWithScheduleMixin, generic.TemplateView):
 class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
     """ 月間カレンダーを表示する """
     template_name = 'mcal/calendar.html'
@@ -23,9 +21,22 @@ class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateV
     date_field = 'date'
     first_weekday = 6
 
+    def set_holiday(self, cal):
+        """ 日付行に休祭日をセットする """
+        for w in cal['month_day_schedules']:
+            for d in w:
+                if jpholiday.is_holiday(d):
+                    logging.debug(d)
+                    logging.debug(jpholiday.is_holiday_name(d))
+                    w[d].append(jpholiday.is_holiday_name(d))
+                    logging.debug(w[d])
+
+        return cal
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         calendar_context = self.get_month_calendar()
+        self.set_holiday(calendar_context)
         context.update(calendar_context)
         return context
 
@@ -98,7 +109,6 @@ class CalendarCreateView(PermissionRequiredMixin, mixins.MonthCalendarMixin, gen
 
 
 class CalendarMemo(generic.TemplateView):
-# class CalendarMemo(LoginRequiredMixin, generic.TemplateView):
     model = Schedule
     template_name = 'mcal/calendar_memo.html'
 
