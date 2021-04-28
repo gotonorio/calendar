@@ -1,6 +1,6 @@
 import datetime
 import itertools
-import logging
+# import logging
 
 import jpholiday
 from django.contrib import messages
