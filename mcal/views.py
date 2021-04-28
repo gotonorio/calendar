@@ -1,4 +1,5 @@
 import datetime
+import itertools
 import logging
 
 import jpholiday
@@ -20,6 +21,27 @@ class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateV
     model = Schedule
     date_field = 'date'
     first_weekday = 6
+
+    def get_month_schedules(self, start, end, days):
+        """ オーバーライドする """
+        lookup = {
+            # '例えば、date__range: (1日, 31日)'を動的に作る
+            '{}__range'.format(self.date_field): (start, end)
+        }
+        # 例えば、Schedule.objects.filter(date__range=(1日, 31日)) になる
+        # https://djangobrothers.com/blogs/filter_queryset_by_dict/
+        queryset = self.model.objects.filter(**lookup)
+
+        # {1日のdatetime: 1日のスケジュール全て, 2日のdatetime: 2日の全て...}のような辞書を作る
+        day_schedules = {day: [] for week in days for day in week}
+        for schedule in queryset:
+            schedule_date = getattr(schedule, self.date_field)
+            day_schedules[schedule_date].append(schedule.description)
+
+        # day_schedules辞書を、周毎に分割する。[{1日: 1日のスケジュール...}, {8日: 8日のスケジュール...}, ...]
+        # 7個ずつ取り出して分割しています。
+        size = len(day_schedules)
+        return [{key: day_schedules[key] for key in itertools.islice(day_schedules, i, i+7)} for i in range(0, size, 7)]
 
     def set_holiday(self, cal):
         """ 日付行に休祭日をセットする """

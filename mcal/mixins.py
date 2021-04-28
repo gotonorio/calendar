@@ -102,7 +102,7 @@ class MonthWithScheduleMixin(MonthCalendarMixin):
         day_schedules = {day: [] for week in days for day in week}
         for schedule in queryset:
             schedule_date = getattr(schedule, self.date_field)
-            day_schedules[schedule_date].append(schedule.description)
+            day_schedules[schedule_date].append(schedule)
 
         # day_schedules辞書を、周毎に分割する。[{1日: 1日のスケジュール...}, {8日: 8日のスケジュール...}, ...]
         # 7個ずつ取り出して分割しています。
