@@ -125,7 +125,7 @@ STATIC_URL = '/static/'
 
 # 追加設定
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = '2021-04-19'
+VERSION_NO = '2021-04-28'
 # Userモデル
 AUTH_USER_MODEL = 'register.User'
 
