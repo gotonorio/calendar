@@ -16,7 +16,7 @@ from .models import Schedule
 
 class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
     """ 月間カレンダーを表示する """
-    template_name = 'mcal/calendar.html'
+    template_name = 'mcal/calendar_list.html'
     model = Schedule
     date_field = 'date'
     first_weekday = 6
@@ -24,15 +24,11 @@ class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateV
     def set_holiday(self, cal):
         """ 日付行に休祭日をセットする """
         for w in cal:
-            logging.debug(w)
             for d in w:
                 if jpholiday.is_holiday(d):
-                    logging.debug(d)
-                    logging.debug(jpholiday.is_holiday_name(d))
-                    w[d].append(jpholiday.is_holiday_name(d))
-                    # logging.debug(w[d])
-
-        return cal
+                    holiday = '<span style="color:red; font-size:90%" >' + \
+                        jpholiday.is_holiday_name(d) + '</span>'
+                    w[d].insert(0, holiday)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
