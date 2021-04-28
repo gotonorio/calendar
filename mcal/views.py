@@ -23,21 +23,22 @@ class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateV
 
     def set_holiday(self, cal):
         """ 日付行に休祭日をセットする """
-        for w in cal['month_day_schedules']:
+        for w in cal:
+            logging.debug(w)
             for d in w:
                 if jpholiday.is_holiday(d):
                     logging.debug(d)
                     logging.debug(jpholiday.is_holiday_name(d))
                     w[d].append(jpholiday.is_holiday_name(d))
-                    logging.debug(w[d])
+                    # logging.debug(w[d])
 
         return cal
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         calendar_context = self.get_month_calendar()
-        self.set_holiday(calendar_context)
         context.update(calendar_context)
+        self.set_holiday(context['month_day_schedules'])
         return context
 
 
