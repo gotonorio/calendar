@@ -34,7 +34,7 @@ table{
   /*font-family: Osaka;*/
   width:100%;
 }
-.scroll{
+/* .scroll{
   overflow: auto;
   white-space: nowrap;
 }
@@ -46,7 +46,8 @@ table{
 }
 .scroll::-webkit-scrollbar-thumb {
    background: #BCBCBC;
-}
+} */
+
 /* 
 セル幅を固定して、オーバーする場合はスクロールする。divでclass設定すること。
 <td><div class="cell_scroll">テキスト</div></td>

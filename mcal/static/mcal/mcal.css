@@ -15,6 +15,6 @@ a.today {
 .markdown {
   /* markdownではスクロールバーが表示されないため追加 */
   height: 100px;
-  overflow: auto; /* scroll hidden */
+  overflow: auto; /*  hidden */
   white-space: nowrap;
 }
