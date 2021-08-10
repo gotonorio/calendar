@@ -6,8 +6,13 @@
   <br>
   <div class="card content">
     <header class="card-header">
-      <p class="card-header-title has-background-dark has-text-white">{{date | date:"Y年m月d日 "}}メモ</p>
+      <p class="card-header-title has-background-dark has-text-white">{{date | date:"Y年m月d日"}}予定</p>
     </header>
+    <div class="card-content markdown table is-bordered">
+      {{description | markdown_to_html}}
+    </div>
+  </div>
+  <div class="card content">
     <div class="card-content markdown table is-bordered">
       {{memo | markdown_to_html}}
     </div>

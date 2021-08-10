@@ -1,6 +1,5 @@
 import datetime
 import itertools
-# import logging
 
 import jpholiday
 from django.contrib import messages
@@ -13,6 +12,8 @@ from django.views import generic
 from . import mixins
 from .forms import ScheduleForm
 from .models import Schedule
+
+# import logging
 
 
 class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
@@ -139,9 +140,11 @@ class CalendarMemo(generic.TemplateView):
         date = datetime.date(year=int(year), month=int(month), day=int(day))
         try:
             memo = Schedule.objects.values('memo').get(date=date)['memo']
+            description = Schedule.objects.values('description').get(date=date)['description']
         except Schedule.DoesNotExist:
             memo = ''
         context['date'] = date
+        context['description'] = description
         context['memo'] = memo
         return context
 
