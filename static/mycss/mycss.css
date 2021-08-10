@@ -34,19 +34,6 @@ table{
   /*font-family: Osaka;*/
   width:100%;
 }
-/* .scroll{
-  overflow: auto;
-  white-space: nowrap;
-}
-.scroll::-webkit-scrollbar{
-  height: 5px;
-}
-.scroll::-webkit-scrollbar-track{
-  background: #F1F1F1;
-}
-.scroll::-webkit-scrollbar-thumb {
-   background: #BCBCBC;
-} */
 
 /* 
 セル幅を固定して、オーバーする場合はスクロールする。divでclass設定すること。
@@ -174,12 +161,6 @@ th {
 .select-css option {
   font-weight:normal;
 }
-/*
-.nowrap {
-  white-space: nowrap;
-}
-*/
-/*
  https://obel.hatenablog.jp/entry/20160626/1466937585 
  md_containerクラスは画面幅が768px以上になったら、width:748px、margin:autoとなる。
 */

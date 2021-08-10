@@ -143,6 +143,7 @@ class CalendarMemo(generic.TemplateView):
             description = Schedule.objects.values('description').get(date=date)['description']
         except Schedule.DoesNotExist:
             memo = ''
+            description = ''
         context['date'] = date
         context['description'] = description
         context['memo'] = memo
