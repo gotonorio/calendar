@@ -161,6 +161,7 @@ th {
 .select-css option {
   font-weight:normal;
 }
+/*
  https://obel.hatenablog.jp/entry/20160626/1466937585 
  md_containerクラスは画面幅が768px以上になったら、width:748px、margin:autoとなる。
 */
