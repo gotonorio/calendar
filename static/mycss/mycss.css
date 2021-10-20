@@ -1,3 +1,4 @@
+/* mycss ver.1.1.0 */
 
 /* 固定フッタスタイル */
 html {
@@ -22,44 +23,17 @@ main {
     line-height: 40px; /* ここでテキストを垂直に中央に配置 */
     background-color: #f5f5f5;
 }
-/* tableの中央配置 */
-table{
-  width: auto;
-  margin: 3px auto;
-  white-space: nowrap;
-}
 /*
-  スマートフォン対応
-  https://webcommu.net/phone-table-scroll/
-  scrollクラスでtable要素を囲む。
-  bulmaの場合、table-containerで良さそう。
-*/
-/* .scroll{
-  overflow: auto;
-}
-.scroll::-webkit-scrollbar{
-  height: 8px;
-}
-.scroll::-webkit-scrollbar-track{
-  background: #F1F1F1;
-}
-.scroll::-webkit-scrollbar-thumb {
-   background: #BCBCBC;
+ tableの列を改行禁止にする。
+ スマホでは役に立たないのでコメントアウト。
+ */
+/* td.nowrap {
+  white-space: nowrap;
+  }
+th {
+  white-space: nowrap;
 } */
 
-/* webkit系ブラウザ用のスクロールバー調整 */
-::-webkit-scrollbar{
-  width: 10px;
-}
-::-webkit-scrollbar-track{
-  background: #fff;
-  border-left: solid 1px #ececec;
-}
-::-webkit-scrollbar-thumb{
-  background: #ccc;
-  border-radius: 10px;
-  box-shadow: inset 0 0 0 2px #fff;
-}
 a.vmenu {
     text-decoration: none; 
     color:#000000; /* リンク要素のデフォルトの青を黒に */
@@ -74,14 +48,6 @@ a.vmenu:hover {
     background-color:#ffdcd7
 }
 
-/* tableの列を改行禁止にする
-td.nowrap {
-  white-space: nowrap;
-  }
-th {
-  white-space: nowrap;
-}
-*/
 /* 2019/08/02現在、safariでBulmaのclass = "select"が機能しないため、下記cssを使用。*/
 /* https://coliss.com/articles/build-websites/operation/css/consistent-select-element-styling.html*/
 .select-css {
@@ -108,7 +74,6 @@ th {
   background-position: right .7em top 50%, 0 0;
   background-size: .65em auto, 100%;
 }
-
 .select-css::-ms-expand {
   display: none;
 }
@@ -125,22 +90,8 @@ th {
 .select-css option {
   font-weight:normal;
 }
-/*
- https://obel.hatenablog.jp/entry/20160626/1466937585 
- md_containerクラスは画面幅が768px以上になったら、width:748px、margin:autoとなる。
-*/
-@media screen and (min-width: 768px) {
-  .md_container {
-    width: 748px;
-    margin: auto;
-  }
-}
 
 /* 入力フォーム用 style sheet */
-#form_style {
-  width: 320px;
-  margin: auto;
-}
 .errorlist {
   margin: 0;
   padding: 0;
@@ -161,4 +112,82 @@ div.my_field input, div.my_field > select-css, div.my_field > button {
 div.my_field > textarea {
   border-radius: 10px;
   border: solid 1px #999;
+}
+
+/* webkit系ブラウザ用のスクロールバー調整 */
+::-webkit-scrollbar{
+  width: 10px;
+}
+::-webkit-scrollbar-track{
+  background: #fff;
+  border-left: solid 1px #ececec;
+}
+::-webkit-scrollbar-thumb{
+  background: #ccc;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 2px #fff;
+}
+
+/* ログイン画面用 */
+.login_container {
+  width: 320px;
+  margin: auto;
+}
+/* form入力style */
+#form_style {
+  width: 320px;
+  margin: auto;
+}
+ /* 767px以下ではwidthを80%にする */
+@media screen and (max-width: 321px) {
+  .login_container {
+    width: 80%;
+    margin: auto;
+  }
+  #form_style {
+    width: 90%;
+    margin: auto;
+  }
+}
+
+/* 768px以上ではmarginを16pxにする */
+@media screen and (min-width: 769px) {
+  .container.with_mobile {
+    max-width: none !important;
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 100%;
+  }
+}
+/* 767px以下ではmarginを6pxにする */
+@media screen and (max-width: 768px) {
+  .container.with_mobile {
+    max-width: none !important;
+    padding-left:6px;
+    padding-right:6px;
+    width: 100%;
+  }
+}
+/*
+ グラフ表示用
+ https://obel.hatenablog.jp/entry/20160626/1466937585 
+*/
+/* 769px以上ではwidthは60% */
+.graph_container {
+  width: 70%;
+  margin: auto;
+}
+/* 768px以下ではwidthは100% */
+@media screen and (max-width: 768px) {
+  .graph_container {
+    width: 100%;
+    margin: auto;
+  }
+}
+
+/* tableの中央配置 */
+.table_center_nowrap {
+  width: auto;
+  margin: 3px auto;
+  white-space: nowrap;
 }
