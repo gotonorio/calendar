@@ -21,7 +21,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '&3wbz#$9*s*+ke@tq6vro1&%m(7tap&!g#=vmbasw-ll_3iyoj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -125,7 +124,9 @@ STATIC_URL = '/static/'
 
 # 追加設定
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
-VERSION_NO = '2021-09-10'
+# For Django4
+CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
+VERSION_NO = '2022-02-11'
 # Userモデル
 AUTH_USER_MODEL = 'register.User'
 
@@ -141,6 +142,11 @@ MARKDOWN_EXTENSIONS = [
 ]
 
 # settings.pyの切り替え
+try:
+    from .private_settings import *
+except ImportError:
+    pass
+
 try:
     from .local_settings import *
 except ImportError:
