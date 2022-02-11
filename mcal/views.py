@@ -18,10 +18,18 @@ from .models import Schedule
 
 class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
     """ 月間カレンダーを表示する """
-    template_name = 'mcal/calendar_list.html'
+    # template_name = 'mcal/calendar_list.html'
     model = Schedule
     date_field = 'date'
     first_weekday = 6
+
+    def get_template_names(self):
+        """ templateファイルを切り替える """
+        if self.request.user_agent_flag == 'mobile':
+            template_name = "mcal/calendar_mobile.html"
+        else:
+            template_name = "mcal/calendar_pc.html"
+        return [template_name]
 
     def get_month_schedules(self, start, end, days):
         """ オーバーライドする """
