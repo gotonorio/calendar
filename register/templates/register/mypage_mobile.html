@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+通帳口座
+{% endblock %}
+
+{% block head %}
+<link href="{% static 'register/detail_menu.css' %}" rel="stylesheet">
+{% endblock head%}
+
+{% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">【{{user}}】</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <a class="button is-light is-small " href="{% url 'register:logout' %}" >ログアウト</a>
+      </div>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+<br>
+{% block content %}
+<section class="hero is-dark">
+  <div class="hero-body">
+    <div class="content has-text-centered">
+      <h4 class="title">ソフィア・ガーデンズ川崎</h4>
+      <h6 class="subtitle">会計監査 Ver.{{VERSION_NO}}</h6>
+    </div>
+  </div>
+</section>
+<br>
+<div class="container is-fluid">
+  <div class="columns">
+    <div class="column has-text-centered">
+      <details>
+        <summary>通帳明細</summary>
+        <a class="white_color" href="{% url 'record:transaction_list' %}">通帳取引明細</a>
+        <a class="white_color" href="{% url 'record:income_list' %}">通帳収入リスト</a>
+        <a class="white_color" href="{% url 'record:expense_list' %}">通帳支出リスト</a>
+        <a class="white_color" href="{% url 'record:recalc_balance' %}">残高チェック計算</a>
+      </details>
+    </div>
+    <div class="column has-text-centered">
+      <details>
+        <summary>月次報告</summary>
+        <a class="white_color" href="{% url 'monthly_report:incomelist' %}">月別収入</a>
+        <a class="white_color" href="{% url 'monthly_report:expenselist' %}">月別支出</a>
+        <a class="white_color" href="{% url 'monthly_report:all_incomelist' %}"%>年間収入</a>
+        <a class="white_color" href="{% url 'monthly_report:all_expenselist' %}">年間支出</a>
+      </detailes>
+    </div>
+    <div class="column has-text-centered">
+      <details>
+        <summary>監査資料</summary>
+        <a class="white_color" href="{% url 'record:chk_transfer' %}">資金移動チェック</a>
+        <a class="white_color" href="{% url 'check_record:chk_income' %}">収入チェック</a>
+        <a class="white_color" href="{% url 'check_record:chk_expense' %}">支出チェック</a>
+        {% if perms.record.add_transaction %}
+          <hr class="navbar-divider">
+          <a class="white_color" href="{% url 'monthly_report:delinquentlist' %}">滞納状況</a>
+        {% endif %}
+      </detailes>
+    </div>
+  </div>
+  {% if perms.record.add_transaction %}
+    <div class="column has-text-centered">
+      <details>
+        <summary>管理者用</summary>
+        <a class="white_color" href="{% url 'register:master_page' %}">データ管理</a>
+        {% if perms.register.add_user %}
+          <hr class="navbar-divider">
+          <a class="white_color" href="{% url 'register:user_list' %}">登録者一覧</a>
+        {% endif %}
+      </detailes>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

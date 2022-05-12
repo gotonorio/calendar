@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{# http://cccabinet.jpn.org/bootstrap4/components/navbar #}
+{% block title %}
+通帳口座
+{% endblock %}
+
+{% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
+<nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">【{{user}}】</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link is-size-6">通帳明細</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="{% url 'record:transaction_list' %}">通帳取引明細</a>
+          <a class="navbar-item" href="{% url 'record:income_list' %}">通帳収入リスト</a>
+          <a class="navbar-item" href="{% url 'record:expense_list' %}">通帳支出リスト</a>
+          <a class="navbar-item" href="{% url 'record:recalc_balance' %}">残高チェック計算</a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link is-size-6">月次報告</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="{% url 'monthly_report:incomelist' %}">月別収入</a>
+          <a class="navbar-item" href="{% url 'monthly_report:expenselist' %}">月別支出</a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" href="{% url 'monthly_report:all_incomelist' %}"%>年間収入</a>
+          <a class="navbar-item" href="{% url 'monthly_report:all_expenselist' %}">年間支出</a>
+          <a class="navbar-item" href="{% url 'monthly_report:bslist' %}">貸借対照表科目</a>
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link is-size-6">監査資料</a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="{% url 'record:chk_transfer' %}">資金移動チェック</a>
+          <a class="navbar-item" href="{% url 'check_record:chk_income' %}">収入チェック</a>
+          <a class="navbar-item" href="{% url 'check_record:chk_expense' %}">支出チェック</a>
+          {% if perms.record.add_transaction %}
+            <hr class="navbar-divider">
+            {% comment %} <a class="navbar-item" href="{% url 'monthly_report:delinquentlist' %}">滞納状況</a> {% endcomment %}
+            <a class="navbar-item" href="{% url 'check_record:chk_mishuu' %}">未収入(滞納)状況</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="{% url 'check_record:explanation' %}" >監査要領</a>
+      {% if perms.record.add_transaction %}
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link is-size-6">管理者用</a>
+          <div class="navbar-dropdown">
+            <a class="dropdown-item" href="{% url 'register:master_page' %}">データ管理</a>
+            {% if perms.register.add_user %}
+            {% comment %} {% if request.user.is_superuser %} {% endcomment %}
+              <hr class="navbar-divider">
+              <a class="dropdown-item" href="{% url 'register:user_list' %}">登録者一覧</a>
+            {% endif %}
+          </div>
+        </div>
+      {% endif %}
+      <div class="navbar-item">
+        <a class="button is-light is-small " href="{% url 'register:logout' %}" >ログアウト</a>
+      </div>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+<br>
+{% block content %}
+<div class="has-text-centered">
+  <br>
+  <h2 class="subtitle">{{VERSION_NO}}</h2>
+  {% load static%}
+  <img src="{% static 'ramune.png' %}" style="max-height:500px" class="img-fluid" />
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load humanize %} {# 3桁区切りのため追加 #}
+{% load static %} {# {% static  を使うため必要 #}
+
+{% block title %}
+登録ユーザ 一覧
+{% endblock title %}
+{% block head %}
+{% endblock head %}
+{% block navbar %}
+<nav class="navbar is-fixed-top is-black" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">【{{user}}】</a>
+    {# ハンバーガアイコンのため #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarMainMenu">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="navbarMainMenu" class="navbar-menu">
+    <div class="navbar-start">
+    </div>
+    <div class="navbar-end">
+      <a class="navbar-item" href="{% url 'mcal:calendar' %}">戻る</a>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+{% block content %}
+<br>
+<div class="container with_mobile">
+  <div class="content has-text-centered">
+    <h4>登録ユーザ 一覧</h4>
+  </div>
+  <div class="content" id="form_style">
+    <ul>
+      <li>master : ユーザ管理者</li>
+      <li>director : データ編集者</li>
+      <li>guest : 閲覧可能</li>
+    </ul>
+    <br>
+  </div>
+  <table class="table table_center_nowrap is-striped is-narrow is-responsible">
+    <thead>
+      <tr>
+        <th class="has-text-centered">group</th>
+        <th class="has-text-centered">user</th>
+        <th class="has-text-centered">email</th>
+        <th class="has-text-centered">有効</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for list in user_list %}
+      <tr>
+        <td class="has-text-left">{{ list.groups.get }}</td>
+        <td class="has-text-left"><a href="{% url 'register:user_update' list.pk %}">{{ list.username}}</a></td>
+        <td class="has-text-centered ">{{ list.email}}</td>
+        {% if list.is_active == False %}
+          <td class="has-text-centered has-text-danger">{{ list.is_active}}</td>
+        {% else %}
+          <td class="has-text-centered ">{{ list.is_active}}</td>
+        {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
     'register.apps.RegisterConfig',
     'mcal.apps.McalConfig',
 ]
@@ -134,13 +135,16 @@ AUTH_USER_MODEL = 'register.User'
 LOGIN_URL = 'register:login'
 LOGIN_REDIRECT_URL = 'mcal:calendar'
 # LOGOUT_REDIRECT_URL = 'register:logout'
-LOGOUT_REDIRECT_URL = 'mcal:calendar'
+# LOGOUT_REDIRECT_URL = 'mcal:calendar'
 
 # マークダウンの拡張
 MARKDOWN_EXTENSIONS = [
     'markdown.extensions.extra',
     'markdown.extensions.codehilite',
 ]
+
+# ブラウザを閉じたらログアウトさせる。
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 # settings.pyの切り替え
 try:

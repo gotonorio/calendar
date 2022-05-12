@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% load my_templatetags %}
+
+{% block title %}
+管理者ページ
+{% endblock title %}
+{% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
+<nav class="navbar is-fixed-top is-black" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item">【SG川崎】</a>
+    {# ハンバーガアイコンのため以下の5行とbase.htmlでのjsスクリプトが必要 #}
+    <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div id="navbarBasicExample" class="navbar-menu">
+    <div class="navbar-start">
+      {% if perms.register.add_user %}
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link">マスターデータ</a>
+          <div class="navbar-dropdown">
+            <a class="dropdown-item" href="{% url 'record:himoku_create' %}">費目マスタの登録/修正</a>
+            <a class="dropdown-item" href="{% url 'record:depotype_create' %}">入出金マスタの登録/修正</a>
+            <a class="dropdown-item" href="{% url 'record:accounttitle_create' %}">科目マスタの登録/修正</a>
+          </div>
+        </div>
+      {% endif %}
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">通帳データ</a>
+        <div class="navbar-dropdown">
+          <a class="dropdown-item" href="{% url 'record:transaction_create' %}">取引明細登録</a>
+          <a class="dropdown-item" href="{% url 'record:chk_maeuke' %}">前受金データチェック</a>
+          <hr class="navbar-divider">
+        </div>
+      </div>
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">月次データ</a>
+        <div class="navbar-dropdown">
+          <a class="dropdown-item" href="{% url 'monthly_report:data_list' %}">データ一覧</a>
+          <a class="dropdown-item" href="{% url 'monthly_report:create_income' %}">月次報告収入登録</a>
+          <a class="dropdown-item" href="{% url 'monthly_report:create_expense' %}">月次報告支出登録</a>
+          {% comment %} <hr class="navbar-divider"> {% endcomment %}
+          {% comment %} <a class="dropdown-item" href="{% url 'monthly_report:create_delinquent' %}">滞納状況登録</a> {% endcomment %}
+        </div>
+      </div>
+      <div class="navbar-item">
+        <a class="button is-light is-size-7 has-text-weight-bold" href="{% url 'register:backupDB' %}" >バックアップ</a>
+      </div>
+    </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <a class="button is-light is-size-7 has-text-weight-bold" href="{% url 'mcal:calendar' %}" >戻る</a>
+      </div>
+    </div>
+  </div>
+</nav>
+{% endblock navbar %}
+{% block content %}
+<br>
+{% if messages %}
+<div class="container" style="margin-top:1rem;">
+  <div class="notification is-info">
+    <button class="delete" type="button"></button>
+    {% for message in messages %}
+      <p>{{message}}</p>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}}
+
+<div class="container is-fluid">
+  <div class="content has-text-centered ">
+    <h2>会計データの登録／修正</h2>
+    <br>
+  </div>
+  <div class="content">
+    {{comment.description|markdown_to_html}}
+    <br>
+    {% if perms.register.add_user %}
+      <p><a href="{% url 'register:master_page_update' comment.pk %}">修正</a></p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
