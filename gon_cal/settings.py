@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
     'register.apps.RegisterConfig',
     'mcal.apps.McalConfig',
+    'control.apps.ControlConfig',
 ]
 
 MIDDLEWARE = [
