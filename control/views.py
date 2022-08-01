@@ -26,7 +26,7 @@ class ControlRecordUpdateView(PermissionRequiredMixin, generic.UpdateView):
     template_name = 'control/control_form.html'
     permission_required = ("register.add_user")
     # 保存が成功した場合に遷移するurl
-    success_url = reverse_lazy('register:mypage')
+    success_url = reverse_lazy('mcal:calendar')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

@@ -135,8 +135,7 @@ AUTH_USER_MODEL = 'register.User'
 
 LOGIN_URL = 'register:login'
 LOGIN_REDIRECT_URL = 'mcal:calendar'
-# LOGOUT_REDIRECT_URL = 'register:logout'
-# LOGOUT_REDIRECT_URL = 'mcal:calendar'
+LOGOUT_REDIRECT_URL = 'mcal:calendar'
 
 # マークダウンの拡張
 MARKDOWN_EXTENSIONS = [

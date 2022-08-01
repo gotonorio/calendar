@@ -7,10 +7,11 @@
 {% endblock header %}
 
 {% block navbar %}
-{# https://bulma.io/documentation/components/navbar/ #}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
-    <a class="navbar-item">【SG川崎】</a>
+    <a class="navbar-item" href="{% url 'mcal:calendar' month_previous.year month_previous.month %}">前月</a>
+    <a class="navbar-item" href="{% url 'mcal:calendar'%}">【当月】</a>
+    <a class="navbar-item" href="{% url 'mcal:calendar' month_next.year month_next.month %}">次月</a>
     <a role="button" class="navbar-burger " aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -19,25 +20,14 @@
   </div>
   <div id="navbarBasicExample" class="navbar-menu">
     <div class="navbar-start">
-      <a class="navbar-item" href="{% url 'mcal:calendar' month_previous.year month_previous.month %}">前月</a>
-      <a class="navbar-item" href="{% url 'mcal:calendar'%}">【当月】</a>
-      <a class="navbar-item" href="{% url 'mcal:calendar' month_next.year month_next.month %}">次月</a>
     </div>
     <div class="navbar-end">
-  <a class="navbar-item" href="{% url 'register:logout'%}">ログアウト</a>
-    {% if perms.register.add_user %}
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link is-size-6">管理者用</a>
-        <div class="navbar-dropdown">
-          <a class="dropdown-item" href="{% url 'register:user_list' %}">登録者一覧</a>
-        </div>
-      </div>
-    {% endif %}
-    <div class="navbar-item">検索</div>
-      <form class="navbar-item" method="GET" action="{% url 'mcal:search' %}">
-        <input type="search" class="input is-size-7" placeholder="Search" name="keyword" value={{keyword}}>
-        <button type="submit" class="button is-size-7" style="display:none"></button>
-      </form>
+      <a class="navbar-item" href="{% url 'mcal:create'%}">編集</a>
+      <div class="navbar-item">検索</div>
+        <form class="navbar-item" method="GET" action="{% url 'mcal:search' %}">
+          <input type="search" class="input is-size-7" placeholder="Search" name="keyword" value={{keyword}}>
+          <button type="submit" class="button is-size-7" style="display:none"></button>
+        </form>
     </div>
   </div>
 </nav>

@@ -18,6 +18,15 @@
       <a class="navbar-item" href="{% url 'mcal:create' month_next.year month_next.month %}">次月</a>
     </div>
     <div class="navbar-end">
+      {% if perms.register.add_user %}
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link is-size-6">管理者用</a>
+        <div class="navbar-dropdown">
+          <a class="dropdown-item" href="{% url 'register:user_list' %}">登録者一覧</a>
+          <a class="dropdown-item" href="{% url 'control:control_list' %}">仮登録ON/OFF</a>
+        </div>
+      </div>
+      {% endif %}
       <a class="navbar-item" href="{% url 'register:logout'%}">Logout</a>
       <a class="navbar-item" href="{% url 'mcal:calendar'%}">戻る</a>
     </div>

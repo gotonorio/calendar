@@ -16,11 +16,12 @@ from .models import Schedule
 # import logging
 
 
-class MonthWithScheduleCalendar(PermissionRequiredMixin, mixins.MonthWithScheduleMixin, generic.TemplateView):
+# class MonthWithScheduleCalendar(PermissionRequiredMixin, mixins.MonthWithScheduleMixin, generic.TemplateView):
+class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateView):
     """ 月間カレンダーを表示する """
     # template_name = 'mcal/calendar_list.html'
     model = Schedule
-    permission_required = ("mcal.view_schedule")
+    # permission_required = ("mcal.view_schedule")
     date_field = 'date'
     first_weekday = 6
 
