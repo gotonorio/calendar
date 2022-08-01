@@ -22,12 +22,12 @@
     <div class="navbar-start">
     </div>
     <div class="navbar-end">
-      <a class="navbar-item" href="{% url 'mcal:create'%}">編集</a>
       <div class="navbar-item">検索</div>
-        <form class="navbar-item" method="GET" action="{% url 'mcal:search' %}">
-          <input type="search" class="input is-size-7" placeholder="Search" name="keyword" value={{keyword}}>
-          <button type="submit" class="button is-size-7" style="display:none"></button>
-        </form>
+      <form class="navbar-item" method="GET" action="{% url 'mcal:search' %}">
+        <input type="search" class="input is-size-7" placeholder="Search" name="keyword" value={{keyword}}>
+        <button type="submit" class="button is-size-7" style="display:none"></button>
+      </form>
+      <a class="navbar-item" href="{% url 'mcal:create'%}">編集</a>
     </div>
   </div>
 </nav>
