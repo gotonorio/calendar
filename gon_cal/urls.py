@@ -20,6 +20,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('mcal.urls')),
     path('register/', include('register.urls')),
-    path('mcal/', include('mcal.urls')),
+    # path('mcal/', include('mcal.urls')),
     path('control/', include('control.urls')),
 ]
