@@ -15,11 +15,9 @@ class BaseCalendarMixin:
 
     def setup_calendar(self):
         """ 内部カレンダーの設定処理
-
         calendar.Calendarクラスの機能を利用するため、インスタンス化します。
         Calendarクラスのmonthdatescalendarメソッドを利用していますが、デフォルトが月曜日からで、
         日曜日から表示したい(first_weekday=6)、といったケースに対応するためのセットアップ処理です。
-
         """
         self._calendar = calendar.Calendar(self.first_weekday)
 
