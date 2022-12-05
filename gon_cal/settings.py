@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # For Django4
 CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
-VERSION_NO = '2022-08-01'
+VERSION_NO = '2022-12-05'
 # Userモデル
 AUTH_USER_MODEL = 'register.User'
 

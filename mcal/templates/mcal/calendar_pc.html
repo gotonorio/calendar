@@ -7,6 +7,7 @@
 {% endblock header %}
 
 {% block navbar %}
+{# https://bulma.io/documentation/components/navbar/ #}
 <nav class="navbar is-fixed-top is-black is-size-6" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="{% url 'mcal:calendar' month_previous.year month_previous.month %}">前月</a>
@@ -23,11 +24,12 @@
     </div>
     <div class="navbar-end">
       <div class="navbar-item">検索</div>
-      <form class="navbar-item" method="GET" action="{% url 'mcal:search' %}">
-        <input type="search" class="input is-size-7" placeholder="Search" name="keyword" value={{keyword}}>
-        <button type="submit" class="button is-size-7" style="display:none"></button>
-      </form>
-      <a class="navbar-item" href="{% url 'mcal:create'%}">編集</a>
+        <form class="navbar-item" method="GET" action="{% url 'mcal:search' %}">
+          <input type="search" class="input is-size-7" placeholder="Search" name="keyword" value={{keyword}}>
+          <button type="submit" class="button is-size-7" style="display:none"></button>
+        </form>
+        <a class="navbar-item" href="{% url 'mcal:create'%}">編集</a>
+      </div>
     </div>
   </div>
 </nav>
@@ -38,7 +40,8 @@
 <div class="container is-fluid">
   <div class="content has-text-centered">
     <h4>{{ month_current | date:"Y年m月" }}カレンダー</h4>
-    <table class="table is-narrow is-responsible is-bordered">
+    <table class="table is-narrow is-responsible is-bordered is-size-7">
+    {% comment %} <table class="table is-narrow is-responsible is-bordered"> {% endcomment %}
       <thead>
         <tr>
           {% for w in week_names %}
@@ -51,26 +54,26 @@
           <tr>
             {% for day, schedules in week_day_schedules.items %}
               <td class="has-text-right markdown">
-              <div> 
-                {% if month_current.month != day.month %}
-                  {{ day | date:"m/d" }}
-                {% else %}
-                
-                  {% if day == now %}
-                    <div class="has-background-warning has-text-weight-bold">
+                <div> 
+                  {% if month_current.month != day.month %}
+                    {{ day | date:"m/d" }}
                   {% else %}
-                    <div class="has-text-weight-bold">
-                  {% endif %}
-                  <a href="{% url 'mcal:memo' day.year day.month day.day %}" class="today">{{day.day}}日 </a>
-                  </div>
-                {% endif %}
 
-                {% for schedule in schedules %}
-                  <div class="has-text-left">
-                    {{schedule | markdown_to_html}}
-                  </div>
-                {% endfor %}
-              </div>
+                    {% if day == now %}
+                      <div class="has-background-warning has-text-weight-bold">
+                    {% else %}
+                      <div class="has-text-weight-bold">
+                    {% endif %}
+                    <a href="{% url 'mcal:memo' day.year day.month day.day %}" class="today">{{day.day}}日 </a>
+                    </div>
+                  {% endif %}
+
+                  {% for schedule in schedules %}
+                    <div class="has-text-left">
+                      {{schedule | markdown_to_html}}
+                    </div>
+                  {% endfor %}
+                </div>
               </td>
             {% endfor %}
           </tr>
