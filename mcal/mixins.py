@@ -2,8 +2,10 @@
 import calendar
 import datetime
 import itertools
-# import logging
+import logging
 from collections import deque
+
+logger = logging.getLogger(__name__)
 
 
 class BaseCalendarMixin:
@@ -15,16 +17,16 @@ class BaseCalendarMixin:
 
     def setup_calendar(self):
         """ 内部カレンダーの設定処理
-        calendar.Calendarクラスの機能を利用するため、インスタンス化します。
-        Calendarクラスのmonthdatescalendarメソッドを利用していますが、デフォルトが月曜日からで、
-        日曜日から表示したい(first_weekday=6)、といったケースに対応するためのセットアップ処理です。
+        calendar.Calendarクラスの機能を利用するため、月曜始まりのカレンダーとしてインスタンス化する。
+        日曜日始まりとする場合はfirst_weekday=6とする。
+        _calendar変数はpythonの慣用として、クラス内でしか使用しないことを表している。
         """
         self._calendar = calendar.Calendar(self.first_weekday)
 
     def get_week_names_by_deque(self):
         """ first_weekday(最初に表示される曜日)にあわせて、week_namesをシフトする """
         week_names = deque(self.week_names)
-        week_names.rotate(-self.first_weekday)  # リスト内の要素を右に1つずつ移動...なんてときは、dequeを使うと中々面白いです
+        week_names.rotate(-self.first_weekday)
         return week_names
 
     def get_week_names(self):
@@ -55,7 +57,9 @@ class MonthCalendarMixin(BaseCalendarMixin):
             return date.replace(month=date.month+1, day=1)
 
     def get_month_days(self, date):
-        """ 当月の週のリストを返す """
+        """ 当月の週(の日付)リストを返す
+        https://docs.python.org/ja/3/library/calendar.html
+        """
         return self._calendar.monthdatescalendar(date.year, date.month)
 
     def get_current_month(self):
@@ -87,12 +91,13 @@ class MonthWithScheduleMixin(MonthCalendarMixin):
     """スケジュール付きの、月間カレンダーを提供するMixin"""
 
     def get_month_schedules(self, start, end, days):
-        """それぞれの日とスケジュールを返す"""
+        """それぞれの日とスケジュールをDictで返す"""
         lookup = {
             # '例えば、date__range: (1日, 31日)'を動的に作る
             '{}__range'.format(self.date_field): (start, end)
         }
-        # 例えば、Schedule.objects.filter(date__range=(1日, 31日)) になる
+        # 下記は、Schedule.objects.filter(date__range=(1日, 31日)) になる。
+        # QuerySetをdict型(辞書)でfilterする。
         # https://djangobrothers.com/blogs/filter_queryset_by_dict/
         queryset = self.model.objects.filter(**lookup)
 
@@ -100,7 +105,7 @@ class MonthWithScheduleMixin(MonthCalendarMixin):
         day_schedules = {day: [] for week in days for day in week}
         for schedule in queryset:
             schedule_date = getattr(schedule, self.date_field)
-            day_schedules[schedule_date].append(schedule)
+            day_schedules[schedule_date].append(schedule.description)
 
         # day_schedules辞書を、周毎に分割する。[{1日: 1日のスケジュール...}, {8日: 8日のスケジュール...}, ...]
         # 7個ずつ取り出して分割しています。

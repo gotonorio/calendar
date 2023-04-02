@@ -9,3 +9,4 @@ docker/
 __pycache__/
 static/*.png
 local_settings.py
+private_settings.py

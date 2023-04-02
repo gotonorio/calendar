@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-import logging
+# import logging
 import os
 from pathlib import Path
 
@@ -129,7 +129,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # For Django4
 CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
-VERSION_NO = '2022-12-05'
+VERSION_NO = '2023-04-03 開発版'
 # Userモデル
 AUTH_USER_MODEL = 'register.User'
 
@@ -146,16 +146,68 @@ MARKDOWN_EXTENSIONS = [
 # ブラウザを閉じたらログアウトさせる。
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
-# settings.pyの切り替え
+# secret keyのセット。
 try:
     from .private_settings import *
 except ImportError:
     pass
-
+# DEBUGモードのセット。
 try:
     from .local_settings import *
 except ImportError:
     pass
+
+# ログ出力先のディレクトリを設定する
+# https://docs.djangoproject.com/ja/4.0/topics/logging/
+# https://qiita.com/okoppe8/items/3e8ab77c5801a7d21991
+LOG_BASE_DIR = os.path.join("logs", )
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse',
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    "formatters": {"simple": {"format": "%(asctime)s [%(levelname)s] %(message)s"}},
+    # ログの出力方法についての設定。
+    "handlers": {
+        # DEBUG = Falseの場合、ログファイルに出力する。
+        "info": {
+            "level": "INFO",
+            "filters": ['require_debug_false'],
+            "class": "logging.handlers.RotatingFileHandler",
+            "maxBytes": 51200,
+            "backupCount": 5,
+            "filename": os.path.join(LOG_BASE_DIR, "info.log"),
+            "formatter": "simple",
+        },
+        "warning": {
+            "level": "WARNING",
+            "filters": ['require_debug_false'],
+            "class": "logging.handlers.RotatingFileHandler",
+            "maxBytes": 51200,
+            "backupCount": 5,
+            "filename": os.path.join(LOG_BASE_DIR, "warning.log"),
+            "formatter": "simple",
+        },
+        # DEBUG = Trueの場合、コンソールにログ出力する。
+        "debug": {
+            "level": "DEBUG",
+            "filters": ['require_debug_true'],
+            "class": 'logging.StreamHandler',
+            "formatter": "simple",
+        },
+    },
+    # ロガーはルートロガーのみとする。
+    "root": {
+        "handlers": ["info", "warning", "debug"],
+        "level": "DEBUG",
+    },
+}
 
 # For debugging
 if DEBUG:
@@ -163,18 +215,18 @@ if DEBUG:
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "static"),
     )
-    # will output to your console
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format='%(asctime)s %(levelname)s %(message)s',
-    )
+    # # will output to your console
+    # logging.basicConfig(
+    #     level=logging.DEBUG,
+    #     format='%(asctime)s %(levelname)s %(message)s',
+    # )
 else:
     # for nginx
     STATIC_ROOT = '/code/static'
-    # will output to logging file
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format='%(asctime)s %(levelname)s %(message)s',
-        filename='/my_log_file.log',
-        filemode='a'
-    )
+    # # will output to logging file
+    # logging.basicConfig(
+    #     level=logging.DEBUG,
+    #     format='%(asctime)s %(levelname)s %(message)s',
+    #     filename='/my_log_file.log',
+    #     filemode='a'
+    # )
