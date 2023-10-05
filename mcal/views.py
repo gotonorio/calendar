@@ -2,6 +2,7 @@ import datetime
 import logging
 
 import jpholiday
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Q
@@ -21,7 +22,7 @@ class MonthWithScheduleCalendar(mixins.MonthWithScheduleMixin, generic.TemplateV
     model = Schedule
     # permission_required = ("mcal.view_schedule")
     date_field = 'date'
-    first_weekday = 6
+    first_weekday = settings.FIRST_WEEKDAY
 
     def get_template_names(self):
         """ templateファイルを切り替える """

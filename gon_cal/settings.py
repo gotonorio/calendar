@@ -129,13 +129,16 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 # For Django4
 CSRF_TRUSTED_ORIGINS = ['https://*.sophiagardens.org']
-VERSION_NO = '2023-04-03 開発版'
+VERSION_NO = '2023-10-05 開発版'
 # Userモデル
 AUTH_USER_MODEL = 'register.User'
 
 LOGIN_URL = 'register:login'
 LOGIN_REDIRECT_URL = 'mcal:calendar'
 LOGOUT_REDIRECT_URL = 'mcal:calendar'
+
+# 週の始まり（0:月曜、1:火曜、2:水曜、3:木曜、4:金曜、5:土曜、6:日）
+FIRST_WEEKDAY = 0
 
 # マークダウンの拡張
 MARKDOWN_EXTENSIONS = [
