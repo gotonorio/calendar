@@ -1,5 +1,5 @@
-Django==5.0.4
+Django==5.0.7
 gunicorn==22.0.0
-markdown==3.4.4
+markdown==3.6
 user-agents==2.2.0
-jpholiday==0.1.8
+jpholiday==0.1.10
