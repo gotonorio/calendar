@@ -10,5 +10,6 @@ static/*.png
 local_settings.py
 private_settings.py
 docker/Dockerfile
-docker/docker-compose.yml
+docker/compose.yml
+docker/local_compose.yml
 
